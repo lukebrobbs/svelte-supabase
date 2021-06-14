@@ -1,11 +1,16 @@
 <script lang="ts">
-	import { createClient } from '@supabase/supabase-js';
 	import { goto } from '$app/navigation';
 
 	import Auth from 'supabase-ui-svelte';
-	import { SUPABASE_KEY } from '$lib/env';
+	import { supabase, user } from '../stores/user';
 
-	const supabaseClient = createClient('https://rfvlbchltzmcqwhcajkp.supabase.co', SUPABASE_KEY);
+	const shouldRedirect = () => {
+		if ($user) {
+			goto('/dashboard');
+		}
+	};
+
+	$: $user, shouldRedirect();
 
 </script>
 
@@ -30,7 +35,7 @@
 					style="fill:#fff"
 				/></svg
 			>
-			<Auth {supabaseClient} />
+			<Auth supabaseClient={supabase} />
 		</div>
 	</div>
 </div>

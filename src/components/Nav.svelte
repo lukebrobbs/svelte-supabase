@@ -11,9 +11,8 @@
 		profileMenuOpen = !profileMenuOpen;
 	}
 
-	const signOut = async () => {
-		await supabase.auth.signOut();
-		user.set(undefined);
+	const signOut = () => {
+		supabase.auth.signOut();
 	};
 
 </script>
