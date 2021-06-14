@@ -2,11 +2,9 @@
 	import { createClient } from '@supabase/supabase-js';
 	import { goto } from '$app/navigation';
 	import { user } from '../stores/user';
+	import { SUPABASE_KEY } from '$lib/env';
 
-	const supabase = createClient(
-		'https://rfvlbchltzmcqwhcajkp.supabase.co',
-		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyMzI3Mzc1NCwiZXhwIjoxOTM4ODQ5NzU0fQ.iuRHI5vv3EUHE5BaEpyUxIRbG1DyQalCmJKMS8yd-pY'
-	);
+	const supabase = createClient('https://rfvlbchltzmcqwhcajkp.supabase.co', SUPABASE_KEY);
 
 	let formValues: { email?: string; password?: string } = {};
 

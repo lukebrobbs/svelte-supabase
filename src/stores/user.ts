@@ -7,6 +7,7 @@ export const supabase = createClient('https://rfvlbchltzmcqwhcajkp.supabase.co',
 
 export const user = writable<AuthUser | undefined>(undefined);
 
-supabase.auth.onAuthStateChange((_, session) => {
+supabase.auth.onAuthStateChange((event, session) => {
+	console.log(event, session);
 	user.set(session.user);
 });

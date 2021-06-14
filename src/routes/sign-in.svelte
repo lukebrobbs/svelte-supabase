@@ -1,31 +1,11 @@
 <script lang="ts">
 	import { createClient } from '@supabase/supabase-js';
 	import { goto } from '$app/navigation';
-	import { user } from '../stores/user';
 
-	const supabase = createClient(
-		'https://rfvlbchltzmcqwhcajkp.supabase.co',
-		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyMzI3Mzc1NCwiZXhwIjoxOTM4ODQ5NzU0fQ.iuRHI5vv3EUHE5BaEpyUxIRbG1DyQalCmJKMS8yd-pY'
-	);
+	import Auth from 'supabase-ui-svelte';
+	import { SUPABASE_KEY } from '$lib/env';
 
-	let formValues: { email?: string; password?: string } = {};
-
-	const signIn = () => {
-		const { email, password } = formValues;
-		supabase.auth
-			.signIn({ email, password })
-			.then((res) => {
-				if (res.error) {
-					console.log(res.error);
-				} else {
-					user.set(res.user);
-					goto('/dashboard');
-				}
-			})
-			.catch((err) => {
-				console.log({ err });
-			});
-	};
+	const supabaseClient = createClient('https://rfvlbchltzmcqwhcajkp.supabase.co', SUPABASE_KEY);
 
 </script>
 
@@ -50,87 +30,7 @@
 					style="fill:#fff"
 				/></svg
 			>
-
-			<h2 class="mt-2 text-center text-3xl font-extrabold text-gray-900">
-				Sign in to your account
-			</h2>
-			<p class="mt-2 text-center text-sm text-gray-600">
-				Or
-				<a href="/sign-up" class="font-medium text-primary-500 hover:text-primary-700"> Sign up </a>
-			</p>
+			<Auth {supabaseClient} />
 		</div>
-		<form class="mt-8 space-y-6" on:submit|preventDefault={signIn}>
-			<input type="hidden" name="remember" value="true" />
-			<div class="rounded-md shadow-sm -space-y-px">
-				<div>
-					<label for="email-address" class="sr-only">Email address</label>
-					<input
-						bind:value={formValues.email}
-						id="email-address"
-						name="email"
-						type="email"
-						autocomplete="email"
-						required
-						class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
-						placeholder="Email address"
-					/>
-				</div>
-				<div>
-					<label for="password" class="sr-only">Password</label>
-					<input
-						bind:value={formValues.password}
-						id="password"
-						name="password"
-						type="password"
-						autocomplete="current-password"
-						required
-						class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
-						placeholder="Password"
-					/>
-				</div>
-			</div>
-
-			<div class="flex items-center justify-between">
-				<div class="flex items-center">
-					<input
-						id="remember_me"
-						name="remember_me"
-						type="checkbox"
-						class="h-4 w-4 text-primary-500 focus:ring-primary-500 border-gray-300 rounded"
-					/>
-					<label for="remember_me" class="ml-2 block text-sm text-gray-900"> Remember me </label>
-				</div>
-
-				<div class="text-sm">
-					<a href="#" class="font-medium text-primary-500 hover:text-primary-700">
-						Forgot your password?
-					</a>
-				</div>
-			</div>
-
-			<div>
-				<button
-					type="submit"
-					class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md transition-colors text-white bg-primary-500 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
-				>
-					<span class="absolute left-0 inset-y-0 flex items-center pl-3">
-						<svg
-							class="h-5 w-5 text-primary-300"
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 20 20"
-							fill="currentColor"
-							aria-hidden="true"
-						>
-							<path
-								fill-rule="evenodd"
-								d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-								clip-rule="evenodd"
-							/>
-						</svg>
-					</span>
-					Sign in
-				</button>
-			</div>
-		</form>
 	</div>
 </div>
