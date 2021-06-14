@@ -1,4 +1,6 @@
 <script>
+	import { page } from '$app/stores';
+
 	import { user, supabase } from '../stores/user';
 
 	let mobileOpen = false;
@@ -11,8 +13,8 @@
 		profileMenuOpen = !profileMenuOpen;
 	}
 
-	const signOut = () => {
-		supabase.auth.signOut();
+	const signOut = async () => {
+		await supabase.auth.signOut();
 	};
 
 </script>
@@ -134,11 +136,31 @@
 				</a>
 				<div class="hidden sm:ml-6 sm:flex sm:space-x-8">
 					<a
-						href="/dashboard"
-						class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+						href="/events"
+						class={`border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 ${
+							$page.path === '/events' ? 'border-b-2' : ''
+						} text-sm font-medium`}
 					>
-						Dashboard
+						Events
 					</a>
+					<a
+						href="/marketplace"
+						class={`border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 ${
+							$page.path === '/marketplace' ? 'border-b-2' : ''
+						} text-sm font-medium`}
+					>
+						Marketplace
+					</a>
+					{#if $user}
+						<a
+							href="/dashboard"
+							class={`border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 ${
+								$page.path === '/dashboard' ? 'border-b-2' : ''
+							} text-sm font-medium`}
+						>
+							Dashboard
+						</a>
+					{/if}
 				</div>
 			</div>
 			<div
@@ -172,7 +194,7 @@
 								type="button"
 								class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 								id="user-menu-button"
-								aria-expanded="false"
+								aria-expanded={profileMenuOpen}
 								aria-haspopup="true"
 								on:click={handleProfileDropdownClick}
 							>
@@ -212,15 +234,40 @@
 		</div>
 	</div>
 
-	<!-- Mobile menu, show/hide based on menu state. -->
 	<div class={`sm:hidden ${mobileOpen ? 'block' : 'hidden'}`} id="mobile-menu">
 		<div class="pt-2 pb-4 space-y-1">
-			<!-- Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
 			<a
-				href="/dasboard"
-				class="bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
-				>Dashboard</a
+				href="/events"
+				class={` block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+					$page.path === '/events'
+						? 'bg-indigo-50 border-indigo-500 text-indigo-700'
+						: 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700'
+				}`}
 			>
+				Events
+			</a>
+			<a
+				href="/marketplace"
+				class={` block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+					$page.path === '/marketplace'
+						? 'bg-indigo-50 border-indigo-500 text-indigo-700'
+						: 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700'
+				}`}
+			>
+				Marketplace
+			</a>
+			{#if $user}
+				<a
+					href="/dashboard"
+					class={` block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+						$page.path === '/dashboard'
+							? 'bg-indigo-50 border-indigo-500 text-indigo-700'
+							: 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700'
+					}`}
+				>
+					Dashboard
+				</a>
+			{/if}
 		</div>
 	</div>
 </nav>
