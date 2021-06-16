@@ -1,7 +1,8 @@
 <script>
+	import { db } from '$lib/db';
+	import format from 'date-fns/format';
+	import parseISO from 'date-fns/parseISO';
 	import { onMount } from 'svelte';
-
-	import { supabase } from '../stores/user';
 
 	let loading = true;
 	let events = [];
@@ -10,8 +11,18 @@
 		try {
 			loading = true;
 
-			let { data, error, status } = await supabase.from('events').select(`name`);
-
+			let { data, error, status } = await db.from('events').select(`
+    name,
+    artist (
+      name
+    ),
+	venue (
+	  name,
+	  capacity
+	),
+	date
+  `);
+			console.log(data);
 			if (error && status !== 406) throw error;
 
 			if (data) {
@@ -35,7 +46,9 @@
 		<p>Loading...</p>
 	{:else}
 		<div class="p-2 border border-gray-200 shadow-sm rounded-md max-w-sm text-center">
-			<h1 class="font-bold">{event.name}</h1>
+			<h1 class="font-bold text-2xl">{event.name}</h1>
+			<p>{event.artist.name}</p>
+			<p>{format(parseISO(event.date), 'dd MMM yyyy')}</p>
 		</div>
 	{/if}
 {/each}

@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { db } from '$lib/db';
 
 	import Auth from 'supabase-ui-svelte';
-	import { supabase, user } from '../stores/user';
+	import { user } from '../stores/user';
 
 	const shouldRedirect = () => {
 		if ($user) {
@@ -35,7 +36,7 @@
 					style="fill:#fff"
 				/></svg
 			>
-			<Auth supabaseClient={supabase} />
+			<Auth supabaseClient={db} />
 		</div>
 	</div>
 </div>

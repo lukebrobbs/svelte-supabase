@@ -1,7 +1,8 @@
 <script>
 	import { page } from '$app/stores';
+	import { db } from '$lib/db';
 
-	import { user, supabase } from '../stores/user';
+	import { user } from '../stores/user';
 
 	let mobileOpen = false;
 	let profileMenuOpen = false;
@@ -14,7 +15,7 @@
 	}
 
 	const signOut = async () => {
-		await supabase.auth.signOut();
+		await db.auth.signOut();
 	};
 
 </script>
