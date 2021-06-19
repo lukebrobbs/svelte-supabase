@@ -10,7 +10,7 @@ export const getEventById = async (id: string) => {
 
 export const getAllEvents = async () => await db.from<Event[]>('events').select(GET_ALL_EVENTS);
 
-export const GET_EVENT = `
+const GET_EVENT = `
     id,
     name,
     artist (
@@ -23,7 +23,7 @@ export const GET_EVENT = `
     date
 `;
 
-export const GET_ALL_EVENTS = `
+const GET_ALL_EVENTS = `
   id,
   name,
   artist (
