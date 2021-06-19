@@ -1,5 +1,5 @@
 <script>
-	import { db, GET_ALL_EVENTS } from '$lib/db';
+	import { db, getAllEvents, GET_ALL_EVENTS } from '$lib/db';
 	import format from 'date-fns/format';
 	import parseISO from 'date-fns/parseISO';
 	import { onMount } from 'svelte';
@@ -10,10 +10,9 @@
 	async function getEvents() {
 		try {
 			loading = true;
-
-			let { data, error, status } = await db.from('events').select(GET_ALL_EVENTS);
+			let { data, error, status } = await getAllEvents();
 			if (error && status !== 406) throw error;
-
+			console.log(data);
 			if (data) {
 				events = data;
 			}
@@ -34,10 +33,12 @@
 	{#if loading}
 		<p>Loading...</p>
 	{:else}
-		<div class="p-2 border border-gray-200 shadow-sm rounded-md max-w-sm text-center">
-			<h1 class="font-bold text-2xl">{event.name}</h1>
-			<p>{event.artist.name}</p>
-			<p>{format(parseISO(event.date), 'dd MMM yyyy')}</p>
-		</div>
+		<a href={`/events/${event.id}`}>
+			<div class="p-2 border border-gray-200 shadow-sm rounded-md max-w-sm text-center">
+				<h1 class="font-bold text-2xl">{event.name}</h1>
+				<p>{event.artist.name}</p>
+				<p>{format(parseISO(event.date), 'dd MMM yyyy')}</p>
+			</div>
+		</a>
 	{/if}
 {/each}
