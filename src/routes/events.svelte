@@ -1,5 +1,5 @@
 <script>
-	import { db } from '$lib/db';
+	import { db, GET_ALL_EVENTS } from '$lib/db';
 	import format from 'date-fns/format';
 	import parseISO from 'date-fns/parseISO';
 	import { onMount } from 'svelte';
@@ -11,18 +11,7 @@
 		try {
 			loading = true;
 
-			let { data, error, status } = await db.from('events').select(`
-    name,
-    artist (
-      name
-    ),
-	venue (
-	  name,
-	  capacity
-	),
-	date
-  `);
-			console.log(data);
+			let { data, error, status } = await db.from('events').select(GET_ALL_EVENTS);
 			if (error && status !== 406) throw error;
 
 			if (data) {
