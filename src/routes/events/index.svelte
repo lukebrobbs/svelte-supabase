@@ -1,5 +1,5 @@
 <script>
-	import { db, getAllEvents, GET_ALL_EVENTS } from '$lib/db';
+	import { db, getAllEvents } from '$lib/db';
 	import format from 'date-fns/format';
 	import parseISO from 'date-fns/parseISO';
 	import { onMount } from 'svelte';
