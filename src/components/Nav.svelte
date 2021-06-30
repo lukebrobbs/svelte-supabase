@@ -17,7 +17,6 @@
 	const signOut = async () => {
 		await db.auth.signOut();
 	};
-
 </script>
 
 <nav class="bg-white shadow">
@@ -213,7 +212,7 @@
 								profileMenuOpen
 									? 'transition ease-out duration-200  transform opacity-100 scale-100'
 									: 'transition ease-in duration-75 transform opacity-0 scale-95 pointer-events-none'
-							} origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
+							} origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10`}
 							role="menu"
 							aria-orientation="vertical"
 							aria-labelledby="user-menu-button"
