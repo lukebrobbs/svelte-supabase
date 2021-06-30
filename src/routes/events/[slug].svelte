@@ -13,21 +13,26 @@
 				error: new Error(`Could not load ${page.params.slug}`)
 			};
 		}
-
 		return {
 			props: {
 				event: data
 			}
 		};
 	}
-
 </script>
 
 <script lang="ts">
 	import type { Event } from 'src/types';
 
 	export let event: Event;
-
 </script>
 
-<h1>{event.name}</h1>
+<div class="relative -mt-6">
+	<div class="absolute inset-0">
+		<img src={event.cover_img_url} alt={event.name} class="h-full w-full object-cover" />
+		<div class="absolute inset-0 bg-gray-400 mix-blend-multiply" />
+	</div>
+	<div class="relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8">
+		<h1 class="text-center text-4xl text-gray-50">{event.name}</h1>
+	</div>
+</div>

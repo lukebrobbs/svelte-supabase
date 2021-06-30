@@ -12,7 +12,6 @@
 			loading = true;
 			let { data, error, status } = await getAllEvents();
 			if (error && status !== 406) throw error;
-			console.log(data);
 			if (data) {
 				events = data;
 			}
@@ -24,7 +23,6 @@
 	}
 
 	onMount(getEvents);
-
 </script>
 
 <h1 class="text-2xl mb-2">Events</h1>

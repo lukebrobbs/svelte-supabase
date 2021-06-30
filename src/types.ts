@@ -3,6 +3,7 @@ export interface Event {
 	name: string;
 	date: string;
 	artist: Artist;
+	cover_img_url: string;
 }
 
 export interface Artist {

@@ -16,6 +16,7 @@ const GET_EVENT = `
     artist (
         name
     ),
+    cover_img_url,
     venue (
         name,
         capacity
